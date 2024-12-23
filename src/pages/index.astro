@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ServiceFeatures from '../components/ServiceFeatures.astro';
+import ImageGallery from '../components/ImageGallery.astro';
+import ScrollButton from '../components/ScrollButton.astro';
+
+const services = [
+  {
+    title: "Expert PCB Design Service",
+    description: "Share your requirements and let our experts design your PCB - No technical knowledge needed!",
+    icon: "🎯"
+  },
+  {
+    title: "Premium Manufacturing",
+    description: "Industry-leading PCB manufacturing with strict quality control",
+    icon: "🏭"
+  },
+  {
+    title: "Free Design Consultation",
+    description: "Get free consultation and design assistance from our experts",
+    icon: "💡"
+  }
+];
+---
+
+<Layout title="TechLab - Research & PCB Solutions">
+  <div class="bg-gradient-to-r from-[#3d52a0] via-[#7091e6] via-[#8697c4] to-[#adbbda] text-white py-20">
+
+ 
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="text-4xl md:text-5xl font-bold text-center mb-6">
+        Your Vision, Our Expertise..
+      </h1>
+      <p class="text-xl text-center max-w-3xl mx-auto">
+        Don't worry about PCB design complexities - Just share your requirements, and we'll handle everything from design to manufacturing at an affordable price.
+      </p>
+    </div>
+  </div>
+
+  <ServiceFeatures />
+  <ImageGallery />
+  <ScrollButton />
+</Layout>

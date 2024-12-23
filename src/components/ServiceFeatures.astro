@@ -1,0 +1,44 @@
+---
+const services = [
+  {
+    icon: "🏭",
+    title: "High Quality PCB Manufacturing",
+    description: "Industry-leading manufacturing processes with strict quality control and testing"
+  },
+  {
+    icon: "✏️",
+    title: "Free PCB Design Service",
+    description: "Share your idea with us and we'll design your PCB for free"
+  },
+  {
+    icon: "🛠️",
+    title: "Post-Delivery Support",
+    description: "Comprehensive after-sales support and technical assistance"
+  },
+  {
+    icon: "💬",
+    title: "1-on-1 Consultation",
+    description: "Direct communication with our technical experts for doubt clarification"
+  },
+  {
+    icon: "🔄",
+    title: "Free Replacement Guarantee",
+    description: "100% free replacement for any manufacturing defects"
+  }
+];
+---
+
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-center mb-12">Premium PCB Services</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {services.map(service => (
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+          <span class="text-4xl mb-4 block">{service.icon}</span>
+          <h3 class="text-xl font-semibold mb-2">{service.title}</h3>
+          <p class="text-gray-600">{service.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

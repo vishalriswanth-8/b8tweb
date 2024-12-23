@@ -1,0 +1,86 @@
+---
+---
+<div class="bg-white p-6 rounded-lg shadow-md mb-6">
+  <h3 class="text-lg font-semibold mb-4">PCB Price Calculator</h3>
+  <div class="space-y-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Board Dimensions</label>
+      <div class="grid grid-cols-2 gap-4 mt-1">
+        <div>
+          <label class="block text-sm text-gray-600">Width (mm)</label>
+          <input
+            type="number"
+            id="boardWidth"
+            min="1"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          >
+        </div>
+        <div>
+          <label class="block text-sm text-gray-600">Height (mm)</label>
+          <input
+            type="number"
+            id="boardHeight"
+            min="1"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          >
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Layer Type</label>
+      <select
+        id="layerType"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+      >
+        <option value="single">Single Layer</option>
+      </select>
+      <p class="mt-1 text-sm text-gray-500">Currently only single layer PCBs are available</p>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Quantity</label>
+      <input
+        type="number"
+        id="quantity"
+        min="1"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+      >
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <button
+        id="calculate-pcb-btn"
+        class="bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+      >
+        Calculate PCB Price
+      </button>
+      
+      <div class="bg-gray-50 p-4 rounded-md flex-grow">
+        <h4 class="font-medium text-gray-900">Estimated Price</h4>
+        <p class="text-2xl font-bold text-blue-600 mt-2">₹<span id="estimatedPrice">0.00</span></p>
+        <p class="text-sm text-gray-500 mt-1">Price = Quantity × Size (mm²) × ₹0.06</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function calculatePrice() {
+    const width = Number(document.getElementById('boardWidth').value);
+    const height = Number(document.getElementById('boardHeight').value);
+    const quantity = Number(document.getElementById('quantity').value);
+    
+    if (!width || !height || !quantity) {
+      alert('Please fill in all required fields (width, height, and quantity)');
+      return;
+    }
+    
+    const area = width * height;
+    const price = quantity * area * 0.06;
+    
+    document.getElementById('estimatedPrice').textContent = price.toFixed(2);
+  }
+
+  document.getElementById('calculate-pcb-btn')?.addEventListener('click', calculatePrice);
+</script>

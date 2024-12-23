@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Shopping Cart - TechLab">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+    
+    <div id="cart-items" class="mb-8">
+      <!-- Cart items will be dynamically inserted here -->
+    </div>
+
+    <div id="cart-summary" class="bg-gray-50 p-6 rounded-lg">
+      <div class="flex justify-between mb-4">
+        <span class="font-semibold">Total:</span>
+        <span id="cart-total" class="font-bold">₹0.00</span>
+      </div>
+      
+      <button
+        id="checkout-button"
+        class="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      >
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  function updateCart() {
+    const cartContainer = document.getElementById('cart-items');
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    if (cart.length === 0) {
+      cartContainer.innerHTML = '<p class="text-gray-500">Your cart is empty</p>';
+      return;
+    }
+
+    let total = 0;
+    const items = cart.map(item => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+      return `
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b py-4">
+          <div class="mb-2 sm:mb-0">
+            <h3 class="font-semibold">${item.title}</h3>
+            <p class="text-gray-600">Quantity: ${item.quantity}</p>
+            <p class="text-gray-600">Price per item: ₹${item.price}</p>
+            <p class="text-gray-600">Total: ₹${itemTotal.toFixed(2)}</p>
+          </div>
+          <div class="flex items-center">
+            <button
+              class="text-red-600 hover:text-red-800"
+              onclick="window.updateCart('${item.id}', 'remove')"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    cartContainer.innerHTML = items;
+    document.getElementById('cart-total').textContent = `₹${total.toFixed(2)}`;
+  }
+
+  // Initialize cart on page load
+  updateCart();
+
+  // Listen for cart updates
+  window.addEventListener('cartUpdated', updateCart);
+
+  // Setup checkout button
+  document.getElementById('checkout-button')?.addEventListener('click', () => {
+    alert('Proceeding to checkout... (Payment gateway integration would go here)');
+  });
+</script>

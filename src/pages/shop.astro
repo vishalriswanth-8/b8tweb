@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProductCard from '../components/ProductCard.astro';
+
+const products = [
+  {
+    id: "Tool-1",
+    title: "Glue gun",
+    price: 150,
+    image: "/images/pcb-design.jpg",
+    description: "Professional glue gun for DIY and craft works, power: 20 watts; input: 220-110v AC 50Hz. "
+  },
+  {
+    id: "sub_tool-1",
+    title: "Glue Stick",
+    price: 10,
+    image: "/images/pcb-manufacturing.jpg",
+    description: "Low melting point, can stick in all craft and DIY things"
+  },
+  {
+    id: "components-1",
+    title: "Transistor",
+    price: 3,
+    image: "/images/research.jpg",
+    description: "BJT npn transistor bc547. 150mA; 30v (max)"
+  },
+  {
+    id: "components-2",
+    title: "Resistor",
+    price: 2,
+    image: "/images/research.jpg",
+    description: "220 ohms; 1/4 watts multipurpose resistor."
+  }
+];
+---
+
+<Layout title="Shop - TechLab">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold mb-8">Shop</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {products.map(product => (
+        <ProductCard {...product} />
+      ))}
+    </div>
+  </div>
+</Layout>

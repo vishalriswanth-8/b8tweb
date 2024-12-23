@@ -1,0 +1,27 @@
+---
+---
+<div class="hidden md:flex space-x-6">
+  <a href="/pcb-order" class="text-blue-600 hover:text-blue-800 font-medium">PCB Order</a>
+  <a href="/shop" class="text-blue-600 hover:text-blue-800 font-medium">Shop</a>
+  <a href="/cart" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+    Cart
+    <span id="quick-cart-count" class="ml-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+  </a>
+</div>
+
+<script>
+  function updateQuickCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const count = cart.length;
+    const countElement = document.getElementById('quick-cart-count');
+    if (countElement) {
+      countElement.textContent = count.toString();
+    }
+  }
+
+  // Update count on page load
+  updateQuickCartCount();
+
+  // Listen for cart updates
+  window.addEventListener('cartUpdated', updateQuickCartCount);
+</script>

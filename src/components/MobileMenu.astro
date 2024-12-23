@@ -1,0 +1,40 @@
+---
+---
+<div class="md:hidden hidden absolute left-0 right-0 bg-white border-b border-gray-200 z-50" id="mobile-menu">
+  <div class="px-4 pt-2 pb-3 space-y-2">
+    <!-- Quick access items for mobile -->
+    <div class="flex justify-between py-2 border-b border-gray-200">
+      <a href="/pcb-order" class="text-blue-600 font-medium">PCB Order</a>
+      <a href="/shop" class="text-blue-600 font-medium">Shop</a>
+      <a href="/cart" class="text-blue-600 font-medium flex items-center">
+        Cart
+        <span class="ml-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center mobile-cart-count">0</span>
+      </a>
+    </div>
+    <!-- Other menu items -->
+    <a href="/research" class="block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100">Research</a>
+    <a href="/projects" class="block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100">Projects</a>
+    <a href="/contact" class="block px-3 py-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100">Contact</a>
+  </div>
+</div>
+
+<script>
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+      mobileMenuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+      mobileMenu.classList.toggle('hidden');
+      
+      // Toggle button icon
+      const svg = mobileMenuButton.querySelector('svg');
+      if (isExpanded) {
+        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />';
+      } else {
+        svg.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />';
+      }
+    });
+  }
+</script>

@@ -1,0 +1,27 @@
+---
+const components = [
+  '⚡', '🔌', '💡', '🔋', '📟', '🎛️', '🖥️', '⌨️', '🖨️', '💾'
+];
+---
+<div id="loading-screen" class="fixed inset-0 bg-white z-50 flex items-center justify-center transition-opacity duration-500">
+  <div class="text-center">
+    <div id="spinning-component" class="text-4xl animate-spin mb-4"></div>
+    <div class="text-blue-600 text-xl font-semibold">Loading B8T labs...</div>
+  </div>
+</div>
+
+<script>
+  const components = ['⚡', '🔌', '💡', '🔋', '📟', '🎛️', '🖥️', '⌨️', '🖨️', '💾'];
+  const randomComponent = components[Math.floor(Math.random() * components.length)];
+  document.getElementById('spinning-component').textContent = randomComponent;
+
+  window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+      loadingScreen.style.opacity = '0';
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+      }, 500);
+    }
+  });
+</script>

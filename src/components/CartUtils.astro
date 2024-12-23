@@ -1,0 +1,99 @@
+---
+---
+<script is:inline>
+  // Define updateCart globally
+  window.updateCart = function(productId, action) {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const itemIndex = cart.findIndex(item => item.id === productId);
+    
+    if (action === 'add') {
+      const button = document.querySelector(`[data-product-id="${productId}"]`);
+      if (button) {
+        if (itemIndex === -1) {
+          // Add new item
+          cart.push({
+            id: productId,
+            title: button.getAttribute('data-product-title'),
+            price: parseFloat(button.getAttribute('data-product-price')),
+            quantity: 1
+          });
+        } else {
+          // Increment quantity of existing item
+          cart[itemIndex].quantity += 1;
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        window.dispatchEvent(new Event('cartUpdated'));
+      }
+    } else if (action === 'remove') {
+      if (itemIndex !== -1) {
+        if (cart[itemIndex].quantity > 1) {
+          showQuantityPopup(productId, cart[itemIndex].quantity);
+        } else {
+          cart.splice(itemIndex, 1);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          window.dispatchEvent(new Event('cartUpdated'));
+        }
+      }
+    }
+  };
+
+  // Quantity popup functions
+  window.showQuantityPopup = function(productId, currentQuantity) {
+    const existingPopup = document.getElementById('quantity-popup');
+    if (existingPopup) existingPopup.remove();
+
+    const popup = document.createElement('div');
+    popup.id = 'quantity-popup';
+    popup.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    popup.innerHTML = `
+      <div class="bg-white p-8 rounded-lg shadow-xl">
+        <h3 class="text-xl font-semibold mb-4">Remove Items</h3>
+        <p class="mb-4">Current quantity: ${currentQuantity}</p>
+        <div class="flex justify-end space-x-4">
+          <button onclick="window.decrementQuantity('${productId}')" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
+            Remove One
+          </button>
+          <button onclick="window.removeAll('${productId}')" class="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700">
+            Remove All
+          </button>
+          <button onclick="window.closeQuantityPopup()" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400">
+            Cancel
+          </button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(popup);
+  };
+
+  window.decrementQuantity = function(productId) {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const itemIndex = cart.findIndex(item => item.id === productId);
+    
+    if (itemIndex !== -1) {
+      cart[itemIndex].quantity -= 1;
+      if (cart[itemIndex].quantity === 0) {
+        cart.splice(itemIndex, 1);
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.dispatchEvent(new Event('cartUpdated'));
+    }
+    closeQuantityPopup();
+  };
+
+  window.removeAll = function(productId) {
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const itemIndex = cart.findIndex(item => item.id === productId);
+    
+    if (itemIndex !== -1) {
+      cart.splice(itemIndex, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.dispatchEvent(new Event('cartUpdated'));
+    }
+    closeQuantityPopup();
+  };
+
+  window.closeQuantityPopup = function() {
+    const popup = document.getElementById('quantity-popup');
+    if (popup) popup.remove();
+  };
+</script>

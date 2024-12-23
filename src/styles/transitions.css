@@ -1,0 +1,36 @@
+/* Page Transitions */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.page-transition {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.cart-slide {
+  animation: slideIn 0.5s ease-out;
+}
+
+/* Custom color palette */
+:root {
+  --primary: #3D52A0;
+  --secondary: #7091E6;
+  --tertiary: #8697C4;
+  --accent: #ADBBDA;
+  --background: #EDE8F5;
+}
+
+/* Hover animations */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}

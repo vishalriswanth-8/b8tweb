@@ -1,0 +1,47 @@
+---
+---
+<script>
+  // Initialize cart functionality when the document is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    // Make updateCart available globally
+    window.updateCart = function(productId, action) {
+      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const itemIndex = cart.findIndex(item => item.id === productId);
+      
+      if (action === 'add') {
+        const button = document.querySelector(`[data-product-id="${productId}"]`);
+        if (button) {
+          if (itemIndex === -1) {
+            // Add new item
+            cart.push({
+              id: productId,
+              title: button.getAttribute('data-product-title'),
+              price: parseFloat(button.getAttribute('data-product-price')),
+              quantity: 1
+            });
+          } else {
+            // Increment quantity of existing item
+            cart[itemIndex].quantity += 1;
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+          window.dispatchEvent(new Event('cartUpdated'));
+          
+          // Show confirmation message
+          alert('Item added to cart!');
+        }
+      } else if (action === 'remove') {
+        if (itemIndex !== -1) {
+          if (cart[itemIndex].quantity > 1) {
+            window.showQuantityPopup(productId, cart[itemIndex].quantity);
+          } else {
+            cart.splice(itemIndex, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            window.dispatchEvent(new Event('cartUpdated'));
+          }
+        }
+      }
+    };
+
+    // Rest of the CartManager code remains the same...
+  });
+</script>

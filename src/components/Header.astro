@@ -1,0 +1,18 @@
+---
+import DropdownMenu from './Navigation/DropdownMenu.astro';
+import CartIcon from './CartIcon.astro';
+import Logo from './Logo.astro';
+---
+<header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-40">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16">
+    <div class="flex items-center justify-between h-full">
+      <Logo />
+      <div class="flex items-center space-x-4">
+        <a href="/pcb-order" class="text-gray-900 text-sm hover:text-blue-600 font-medium transition-colors">PCB Order</a>
+        <a href="/shop" class="text-gray-900 text-sm hover:text-blue-600 font-medium transition-colors">Shop</a>
+        <CartIcon />
+        <DropdownMenu />
+      </div>
+    </div>
+  </nav>
+</header>

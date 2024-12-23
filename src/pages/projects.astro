@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = [
+  {
+    title: "Smart Home Automation PCB",
+    description: "Custom PCB design for home automation systems with WiFi and sensor integration",
+    image: "/images/pcb-design.jpg",
+    link: "/projects/smart-home"
+  },
+  {
+    title: "Industrial IoT Solutions",
+    description: "Specialized PCBs for industrial IoT applications with robust design",
+    image: "/images/pcb-manufacturing.jpg",
+    link: "/projects/industrial-iot"
+  },
+  {
+    title: "Research: EMI Reduction",
+    description: "Research on advanced PCB design techniques for EMI reduction",
+    image: "/images/research.jpg",
+    link: "/research/emi-reduction"
+  }
+];
+---
+
+<Layout title="Projects - TechLab">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h1 class="text-3xl font-bold mb-8">Our Projects</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {projects.map(project => (
+        <ProjectCard {...project} />
+      ))}
+    </div>
+  </div>
+</Layout>

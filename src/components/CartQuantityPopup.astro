@@ -1,0 +1,71 @@
+---
+---
+<div id="quantity-popup" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+  <div class="bg-white p-8 rounded-lg shadow-xl transform transition-all">
+    <h3 class="text-xl font-semibold mb-4">Remove Items</h3>
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-2">Select quantity to remove:</label>
+      <select id="remove-quantity" class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+        <!-- Options will be dynamically populated -->
+      </select>
+    </div>
+    <div class="flex justify-end space-x-4">
+      <button onclick="window.removeSelectedQuantity()" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
+        Remove
+      </button>
+      <button onclick="window.closeQuantityPopup()" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400">
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.showQuantityPopup = function(productId, currentQuantity) {
+    const popup = document.getElementById('quantity-popup');
+    const select = document.getElementById('remove-quantity');
+    
+    // Clear existing options
+    select.innerHTML = '';
+    
+    // Add options from 1 to currentQuantity
+    for (let i = 1; i <= currentQuantity; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = i;
+      select.appendChild(option);
+    }
+    
+    // Store productId for later use
+    select.dataset.productId = productId;
+    
+    popup.classList.remove('hidden');
+    popup.classList.add('flex');
+  };
+
+  window.removeSelectedQuantity = function() {
+    const select = document.getElementById('remove-quantity');
+    const productId = select.dataset.productId;
+    const quantityToRemove = parseInt(select.value);
+    
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const itemIndex = cart.findIndex(item => item.id === productId);
+    
+    if (itemIndex !== -1) {
+      cart[itemIndex].quantity -= quantityToRemove;
+      if (cart[itemIndex].quantity <= 0) {
+        cart.splice(itemIndex, 1);
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.dispatchEvent(new Event('cartUpdated'));
+    }
+    
+    closeQuantityPopup();
+  };
+
+  window.closeQuantityPopup = function() {
+    const popup = document.getElementById('quantity-popup');
+    popup.classList.add('hidden');
+    popup.classList.remove('flex');
+  };
+</script>
